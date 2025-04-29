@@ -1,13 +1,13 @@
-package com.global.devices;
+package com.carlos.devices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GlobalDevicesApiApplication {
+public class DevicesApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GlobalDevicesApiApplication.class, args);
+        SpringApplication.run(DevicesApiApplication.class, args);
     }
 
 }

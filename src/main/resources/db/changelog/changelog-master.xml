@@ -13,5 +13,6 @@
 
 
     <include file="changesets/v1.0_CreateTables.sql" relativeToChangelogFile="true"/>
+    <include file="changesets/v1.0_CreateSearchIndexes.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS device
 (
     id SERIAL PRIMARY KEY,
     name VARCHAR(240) NOT NULL,
-    brand VARCHAR(24) NOT NULL,
-    state integer NOT NULL,
+    brand VARCHAR(120) NOT NULL,
+    state VARCHAR(20) NOT NULL,
     creation_time TIMESTAMP NOT NULL
 )

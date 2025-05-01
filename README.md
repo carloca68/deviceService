@@ -4,6 +4,8 @@ A Spring Boot REST API for managing devices. This application provides endpoints
 
 ## ToDo
 - Improve date time documentation format
+- Add more tests for the error handling
+- Improve the docker compose file by addressing inconsistencies between compose.yaml and docker-compose.yaml
 
 ## Technologies Used
 
@@ -109,7 +111,7 @@ The application uses a PostgreSQL database with the following schema:
 | id            | SERIAL    | Primary key                                |
 | name          | VARCHAR   | Device name                                |
 | brand         | VARCHAR   | Device brand                               |
-| state         | INTEGER   | Device state (0=AVAILABLE, 1=IN_USE, 2=DISABLED) |
+| state         | VARCHAR   | Device state (AVAILABLE, IN_USE, DISABLED) |
 | creation_time | TIMESTAMP | When the device was created                |
 
 ## Configuration

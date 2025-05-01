@@ -14,6 +14,7 @@ public record CreateUpdateDevice(String name, String brand, DeviceState state) {
         return (name != null && !name.isBlank()) && (brand != null && !brand.isBlank());
     }
 
+    @JsonIgnore
     public boolean isStateUpdate() {
         return state != null && (name == null || name.isBlank()) && (brand == null || brand.isBlank());
     }

@@ -1,9 +1,11 @@
-# Global Devices API
+# Devices API
 
 A Spring Boot REST API for managing devices. This application provides endpoints for tracking and managing devices with their states (available, in use, or disabled).
 
 ## ToDo
 - Improve date time documentation format
+- Add more tests for the error handling
+- Improve the docker compose file by addressing inconsistencies between compose.yaml and docker-compose.yaml
 
 ## Technologies Used
 
@@ -54,6 +56,22 @@ docker compose up -d
 java -jar target/devicesAPI-0.0.1-SNAPSHOT.jar
 ```
 
+### Build a docker image using paketo buildpacks
+**Obs:** Docker must be installed on your machine and running.
+
+```bash
+./mvnw spring-boot:build-image
+```
+The image name will be `com.carlos/device/api`
+
+### Running the app image as a docker compose image including the postgres database
+**Obs:** Docker must be installed on your machine and running.
+
+```bash
+docker compose -f docker-compose.yaml up 
+```
+The application will be available at: http://localhost:8080/swagger-ui/index.html
+
 ## API Documentation
 
 The API documentation is available via Swagger UI at:
@@ -93,7 +111,7 @@ The application uses a PostgreSQL database with the following schema:
 | id            | SERIAL    | Primary key                                |
 | name          | VARCHAR   | Device name                                |
 | brand         | VARCHAR   | Device brand                               |
-| state         | INTEGER   | Device state (0=AVAILABLE, 1=IN_USE, 2=DISABLED) |
+| state         | VARCHAR   | Device state (AVAILABLE, IN_USE, DISABLED) |
 | creation_time | TIMESTAMP | When the device was created                |
 
 ## Configuration

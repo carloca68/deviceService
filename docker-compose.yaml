@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'com.carlos/device/api:latest'
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/device
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_PROFILES_ACTIVE=prod
+
+  db:
+    image: 'postgres:17'
+    container_name: db
+    environment:
+      - PGDATA=/data/postgres
+      - POSTGRES_DB=device
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres

@@ -61,7 +61,7 @@ public class DeviceRestController {
             @ApiResponse(responseCode = "404", description = "Device not found",
                     content = @Content)})
     @GetMapping("/{id}")
-    public Device findById(@PathVariable long id) {
+    public Device findById(@PathVariable Integer id) {
         return deviceService.findById(id);
     }
 
@@ -150,7 +150,7 @@ public class DeviceRestController {
                     content = @Content)})
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Device update(@PathVariable long id, @RequestBody CreateUpdateDevice device) {
+    public Device update(@PathVariable Integer id, @RequestBody CreateUpdateDevice device) {
         deviceService.updateDevice(id, device);
         return null;
     }
@@ -170,7 +170,7 @@ public class DeviceRestController {
                     content = @Content)})
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Integer id) {
         deviceService.deleteDevice(id);
     }
 

@@ -7,7 +7,7 @@ import com.carlos.devices.domain.model.DeviceState;
 import java.util.Collection;
 
 public interface DeviceService {
-    Device findById(long id);
+    Device findById(Integer id);
 
     Collection<Device> findAllByBrand(String brand);
 
@@ -17,7 +17,7 @@ public interface DeviceService {
 
     Device createDevice(CreateUpdateDevice device);
 
-    void updateDevice(long id, CreateUpdateDevice device);
+    void updateDevice(Integer id, CreateUpdateDevice device);
 
-    void deleteDevice(long id);
+    void deleteDevice(Integer id);
 }

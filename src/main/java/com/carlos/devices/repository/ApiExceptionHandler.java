@@ -1,6 +1,7 @@
 package com.carlos.devices.repository;
 
 import com.carlos.devices.domain.exception.BusinessRulesException;
+import com.carlos.devices.domain.exception.DataException;
 import com.carlos.devices.domain.model.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = BusinessRulesException.class)
     public ResponseEntity<ErrorDTO> businessException(BusinessRulesException businessRulesException) {
         return new ResponseEntity<>(new ErrorDTO("BUSINESS_ERROR", businessRulesException.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = DataException.class)
+    public ResponseEntity<ErrorDTO> dataException(DataException exception) {
+        return new ResponseEntity<>(new ErrorDTO("DATA_ERROR", exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = NoResourceFoundException.class)

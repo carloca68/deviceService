@@ -2,6 +2,9 @@
 
 A Spring Boot REST API for managing devices. This application provides endpoints for tracking and managing devices with their states (available, in use, or disabled).
 
+## ToDo
+- Improve date time documentation format
+
 ## Technologies Used
 
 - Java 21

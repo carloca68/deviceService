@@ -74,19 +74,19 @@ public class DeviceRestControllerTest {
         reset(deviceService);
 
         // Initialize test data
-        testDevice = new Device(1L, "Test Device", "Test Brand", DeviceState.AVAILABLE, LocalDateTime.now());
+        testDevice = new Device(1, "Test Device", "Test Brand", DeviceState.AVAILABLE, LocalDateTime.now());
 
         testDevices = List.of(
-            new Device(1L, "Device 1", "Brand A", DeviceState.AVAILABLE, LocalDateTime.now()),
-            new Device(2L, "Device 2", "Brand B", DeviceState.IN_USE, LocalDateTime.now()),
-            new Device(3L, "Device 3", "Brand A", DeviceState.DISABLED, LocalDateTime.now())
+            new Device(1, "Device 1", "Brand A", DeviceState.AVAILABLE, LocalDateTime.now()),
+            new Device(2, "Device 2", "Brand B", DeviceState.IN_USE, LocalDateTime.now()),
+            new Device(3, "Device 3", "Brand A", DeviceState.DISABLED, LocalDateTime.now())
         );
     }
 
     @Test
     void findById_ShouldReturnDevice() throws Exception {
         // Arrange
-        when(deviceService.findById(1L)).thenReturn(testDevice);
+        when(deviceService.findById(1)).thenReturn(testDevice);
 
         // Act & Assert
         mockMvc.perform(get("/api/device/1"))
@@ -151,8 +151,8 @@ public class DeviceRestControllerTest {
     @Test
     void create_ShouldCreateAndReturnDevice() throws Exception {
         // Arrange
-        CreateUpdateDevice createDevice = new CreateUpdateDevice("New Device", "New Brand");
-        Device createdDevice = new Device(4L, "New Device", "New Brand", DeviceState.AVAILABLE, LocalDateTime.now());
+        CreateUpdateDevice createDevice = new CreateUpdateDevice("New Device", "New Brand", DeviceState.AVAILABLE);
+        Device createdDevice = new Device(4, "New Device", "New Brand", DeviceState.AVAILABLE, LocalDateTime.now());
 
         when(deviceService.createDevice(any(CreateUpdateDevice.class))).thenReturn(createdDevice);
 
@@ -171,9 +171,9 @@ public class DeviceRestControllerTest {
     @Test
     void update_ShouldUpdateDevice() throws Exception {
         // Arrange
-        CreateUpdateDevice updateDevice = new CreateUpdateDevice("Updated Device", "Updated Brand");
+        CreateUpdateDevice updateDevice = new CreateUpdateDevice("Updated Device", "Updated Brand", null);
 
-        doNothing().when(deviceService).updateDevice(anyLong(), any(CreateUpdateDevice.class));
+        doNothing().when(deviceService).updateDevice(anyInt(), any(CreateUpdateDevice.class));
 
         // Act & Assert
         mockMvc.perform(put("/api/device/1")
@@ -181,15 +181,15 @@ public class DeviceRestControllerTest {
                 .content(objectMapper.writeValueAsString(updateDevice)))
                 .andExpect(status().isNoContent());
 
-        verify(deviceService, times(1)).updateDevice(eq(1L), any(CreateUpdateDevice.class));
+        verify(deviceService, times(1)).updateDevice(eq(1), any(CreateUpdateDevice.class));
     }
 
     @Test
     void updateWithInvalidData_ShouldNotUpdateDevice() throws Exception {
         // Arrange
-        CreateUpdateDevice updateDevice = new CreateUpdateDevice("Updated Device", "Updated Brand");
+        CreateUpdateDevice updateDevice = new CreateUpdateDevice("Updated Device", "Updated Brand", null);
 
-        doThrow(new BusinessRulesException("Invalid data")).when(deviceService).updateDevice(anyLong(), any(CreateUpdateDevice.class));
+        doThrow(new BusinessRulesException("Invalid data")).when(deviceService).updateDevice(anyInt(), any(CreateUpdateDevice.class));
 
         // Act & Assert
         mockMvc.perform(put("/api/device/1")
@@ -197,18 +197,18 @@ public class DeviceRestControllerTest {
                         .content(objectMapper.writeValueAsString(updateDevice)))
                 .andExpect(status().isBadRequest());
 
-        verify(deviceService).updateDevice(eq(1L), any(CreateUpdateDevice.class));
+        verify(deviceService).updateDevice(eq(1), any(CreateUpdateDevice.class));
     }
 
     @Test
     void delete_ShouldDeleteDevice() throws Exception {
         // Arrange
-        doNothing().when(deviceService).deleteDevice(anyLong());
+        doNothing().when(deviceService).deleteDevice(anyInt());
 
         // Act & Assert
         mockMvc.perform(delete("/api/device/1"))
                 .andExpect(status().isOk());
 
-        verify(deviceService, times(1)).deleteDevice(1L);
+        verify(deviceService, times(1)).deleteDevice(1);
     }
 }

@@ -10,6 +10,31 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+/**
+ * Global exception handler for managing and formatting error responses in a REST API.
+ *
+ * This class uses Spring's {@link ControllerAdvice} and {@link ExceptionHandler} annotations
+ * to centralize the handling of exceptions thrown by controllers in the application.
+ * It converts exceptions into structured error responses, maintaining consistency
+ * across all API responses.
+ *
+ * Error Responses:
+ * Each handler method returns a {@link ResponseEntity} wrapping an {@link ErrorDTO} object.
+ * The {@link ErrorDTO} encapsulates the error code and a descriptive error message,
+ * making it easier for clients to understand the issue.
+ *
+ * Exception Handlers:
+ * - {@code BusinessRulesException} results in a "BUSINESS_ERROR" response with an HTTP 400 status.
+ * - {@code DataException} results in a "DATA_ERROR" response with an HTTP 404 status.
+ * - {@code NoResourceFoundException} results in an "INVALID_REQUEST" response with an HTTP 400 status.
+ * - {@code MethodArgumentTypeMismatchException} results in an "INVALID_REQUEST" response with an HTTP 400 status.
+ * - Generic {@code Exception} results in a "SYSTEM_ERROR" response with an HTTP 500 status.
+ *
+ * Purpose:
+ * This class ensures uniform error formatting and simplifies debugging by clearly categorizing
+ * errors into business, data, and system-level exceptions. It promotes a clean separation
+ * of concerns by abstracting exception management from controller logic.
+ */
 @ControllerAdvice
 public class ApiExceptionHandler {
 

@@ -266,6 +266,24 @@ class DeviceServiceImplTest {
         verify(deviceRepository, never()).delete(anyInt());
     }
 
+    /**
+     * Tests that the `updateDevice` method of the `DeviceService` updates a device
+     * when the device is currently in the `IN_USE` state, but the update only
+     * modifies the state field without impacting `name` or `brand`.
+     *
+     * Preconditions:
+     * - A device exists with `id` 2, `state` set to `IN_USE`, and valid `name` and `brand`.
+     * - The update object provided only changes the `state` field (e.g., to `AVAILABLE`), leaving `name` and `brand` as null or empty.
+     *
+     * Execution:
+     * - The `updateDevice` method is invoked with the ID of the device and the state-only update details.
+     * - The `deviceRepository.findById` method is called to retrieve the existing device.
+     * - The `deviceRepository.update` method is called with the provided details, only modifying the state and keeping other attributes unchanged.
+     *
+     * Postconditions:
+     * - The repository's `findById` method is verified to have been called once with the correct device ID.
+     * - The repository's `update` method is verified to have been invoked with the correct arguments, ensuring the update focused solely on state transition.
+     */
     @Test
     void updateDevice_ShouldUpdateDevice_WhenDeviceIsInUseButUpdateIsStateOnly() {
         // Arrange

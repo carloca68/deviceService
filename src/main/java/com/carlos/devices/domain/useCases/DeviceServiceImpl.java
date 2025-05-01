@@ -53,6 +53,16 @@ public class DeviceServiceImpl implements DeviceService {
         return deviceRepository.create(device);
     }
 
+    /**
+     * Updates an existing device in the repository with the provided details.
+     * Verifies the validity of the update request and the existence of the device in the repository.
+     * Throws exceptions if the update request or operation violates business rules or if the device does not exist.
+     *
+     * @param id the unique identifier of the device to update
+     * @param device the object containing the update details for the device
+     * @throws BusinessRulesException if the update details are invalid or violate business rules
+     * @throws DataException if the device does not exist in the repository
+     */
     @Override
     public void updateDevice(Integer id, CreateUpdateDevice device) {
         if (!device.isValidForUpdate()) {
@@ -72,6 +82,15 @@ public class DeviceServiceImpl implements DeviceService {
         deviceRepository.update(id, new CreateUpdateDevice(newName, newBrand, newState));
     }
 
+    /**
+     * Deletes a device identified by its unique ID from the repository.
+     * Verifies if the device exists and ensures it is not in use before proceeding with deletion.
+     * If the device does not exist or is currently in use, appropriate exceptions are thrown.
+     *
+     * @param id the unique identifier of the device to be deleted
+     * @throws DataException if the device does not exist in the repository
+     * @throws BusinessRulesException if the device is currently in use and cannot be deleted
+     */
     @Override
     public void deleteDevice(Integer id) {
         Device existing = deviceRepository.findById(id);

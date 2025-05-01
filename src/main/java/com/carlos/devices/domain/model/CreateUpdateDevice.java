@@ -13,4 +13,8 @@ public record CreateUpdateDevice(String name, String brand, DeviceState state) {
     public boolean isValidForCreation() {
         return (name != null && !name.isBlank()) && (brand != null && !brand.isBlank());
     }
+
+    public boolean isStateUpdate() {
+        return state != null && (name == null || name.isBlank()) && (brand == null || brand.isBlank());
+    }
 }

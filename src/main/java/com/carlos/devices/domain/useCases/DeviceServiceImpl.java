@@ -62,7 +62,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (existing == null) {
             throw new DataException("Device for update not found for ID: " + id);
         }
-        if (existing.state().equals(DeviceState.IN_USE)) {
+        if (existing.state().equals(DeviceState.IN_USE) & !device.isStateUpdate()) {
             throw new BusinessRulesException("Device in use, cannot be updated");
         }
         String newName = StringUtils.hasLength(device.name()) ? device.name() : existing.name();

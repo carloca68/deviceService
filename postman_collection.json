@@ -1,0 +1,212 @@
+{
+  "info": {
+    "name": "Devices API",
+    "description": "Collection for the Devices API - provides endpoints for performing CRUD operations on devices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "Get Devices",
+      "item": [
+        {
+          "name": "Get All Devices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/device",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "device"
+              ]
+            },
+            "description": "Retrieves a collection of all devices."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Device by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/device/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "device",
+                "1"
+              ]
+            },
+            "description": "Retrieves a device by its unique identifier."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Devices by Brand",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/device/brand/Samsung",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "device",
+                "brand",
+                "Samsung"
+              ]
+            },
+            "description": "Retrieves a collection of devices filtered by the specified brand."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Devices by State",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/device/state/AVAILABLE",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "device",
+                "state",
+                "AVAILABLE"
+              ]
+            },
+            "description": "Retrieves a collection of devices filtered by the specified state. Possible states: AVAILABLE, IN_USE, DISABLED"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints for retrieving device information"
+    },
+    {
+      "name": "Create Device",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"iPhone 13\",\n    \"brand\": \"Apple\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/device",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "device"
+          ]
+        },
+        "description": "Creates a new device. The device will be created with the status AVAILABLE by default. Both name and brand are required fields."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Device",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Updated Device Name\",\n    \"brand\": \"Updated Brand\",\n    \"state\": \"DISABLED\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/device/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "device",
+            "1"
+          ]
+        },
+        "description": "Updates the details of an existing device identified by its unique identifier. At least one of name, brand, or state must be provided. Possible states: AVAILABLE, IN_USE, DISABLED"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Device",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/device/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "device",
+            "1"
+          ]
+        },
+        "description": "Deletes a device identified by its unique identifier."
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string",
+      "description": "Base URL for the Devices API"
+    }
+  ]
+}

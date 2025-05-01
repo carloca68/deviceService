@@ -7,12 +7,15 @@ import com.carlos.devices.domain.model.DeviceState;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -37,11 +40,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Each test method sets up the mock behavior for the specific test case and verifies
  * the controller's response using MockMvc.
  */
-@WebMvcTest(
-    controllers = DeviceRestController.class,
-    properties = {"spring.main.allow-bean-definition-overriding=true"}
-)
-@Import(DeviceRestControllerTest.TestConfig.class)
+@ExtendWith(SpringExtension.class)
+@AutoConfigureJsonTesters
+@WebMvcTest(DeviceRestController.class)
+@Import({DeviceRestController.class, DeviceRestControllerTest.TestConfig.class})
 public class DeviceRestControllerTest {
 
     @Autowired

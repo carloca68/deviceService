@@ -1,4 +1,4 @@
-# Devices API
+# Global Devices API
 
 A Spring Boot REST API for managing devices. This application provides endpoints for tracking and managing devices with their states (available, in use, or disabled).
 
@@ -12,6 +12,7 @@ A Spring Boot REST API for managing devices. This application provides endpoints
 - Docker and Docker Compose
 - Swagger/OpenAPI for API documentation
 - TestContainers for integration testing
+- JaCoCo for code coverage
 
 ## Prerequisites
 
@@ -25,7 +26,7 @@ A Spring Boot REST API for managing devices. This application provides endpoints
 
 ```bash
 git clone <repository-url>
-cd devicesAPI
+cd globalDevicesAPI
 ```
 
 ### Run with Docker Compose
@@ -34,7 +35,7 @@ The application is configured to use Docker Compose for local development:
 
 ```bash
 # Start the PostgreSQL database
-docker-compose up -d
+docker compose up -d
 
 # Build and run the application
 ./mvnw spring-boot:run
@@ -55,12 +56,20 @@ java -jar target/devicesAPI-0.0.1-SNAPSHOT.jar
 The API documentation is available via Swagger UI at:
 
 ```
-http://localhost:8080/swagger-ui.html
+http://localhost:8080/swagger-ui/index.html
 ```
 
 ## API Endpoints
 
+### Device Management
+
 - `GET /api/device/{id}` - Get a device by ID
+- `GET /api/device/brand/{brand}` - Get all devices by brand
+- `GET /api/device/state/{state}` - Get all devices by state (AVAILABLE, IN_USE, DISABLED)
+- `GET /api/device` - Get all devices
+- `POST /api/device` - Create a new device
+- `PUT /api/device/{id}` - Update an existing device
+- `DELETE /api/device/{id}` - Delete a device
 
 ## Database Schema
 
@@ -83,13 +92,30 @@ The application can be configured using the following properties files:
 - `application.properties` - Default configuration
 - `application-dev.properties` - Development environment configuration
 - `application-prod.properties` - Production environment configuration
+- `application-test.properties` - Test environment configuration
 
 ## Running Tests
 
 ```bash
 # Run all tests
 ./mvnw test
+
+# Run tests with coverage report
+./mvnw test jacoco:report
 ```
+
+The JaCoCo coverage report will be available in `target/site/jacoco/index.html`.
+
+## Testing Approach
+
+The project uses different testing approaches:
+
+1. **Unit Tests**: Testing individual components in isolation
+   - `DeviceRestControllerTest` - Tests the REST controller using MockMVC and mocked service
+   - `SimpleDeviceRestControllerTest` - A more focused test using @WebMvcTest
+
+2. **Integration Tests**: Testing with real dependencies
+   - Uses TestContainers to spin up a PostgreSQL database for integration tests
 
 ## Development
 
@@ -97,16 +123,25 @@ The project uses Spring Boot DevTools for development, which provides features l
 
 ### Project Structure
 
+- `src/main/java/com/carlos/app` - Application bootstrap code
+  - `DevicesApiApplication.java` - Main application class
+
 - `src/main/java/com/carlos/devices` - Main application code
-  - `controller` - REST controllers
-  - `domain` - Domain models and repository interfaces
+  - `DeviceRestController.java` - REST controller for device endpoints
+  - `domain` - Domain models, services, and repository interfaces
+    - `model` - Data models (Device, DeviceState, CreateUpdateDevice)
+    - `useCases` - Service implementations
+    - `exception` - Custom exceptions
   - `repository` - Repository implementations
 
 - `src/main/resources` - Configuration files
   - `db/changelog` - Liquibase database migration scripts
+  - `application*.properties` - Application configuration
 
 - `src/test` - Test code
+  - `com/carlos/app` - Application test configuration
+  - `com/carlos/devices` - Controller and service tests
 
 ## License
 
-[Add license information here]
+This project is licensed under the MIT License - see the LICENSE file for details.

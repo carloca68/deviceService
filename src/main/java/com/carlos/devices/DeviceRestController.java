@@ -1,5 +1,6 @@
-package com.carlos.devices.controller;
+package com.carlos.devices;
 
+import com.carlos.devices.domain.DeviceService;
 import com.carlos.devices.domain.model.CreateUpdateDevice;
 import com.carlos.devices.domain.model.Device;
 import com.carlos.devices.domain.model.DeviceState;
@@ -38,6 +39,11 @@ import java.util.List;
 public class DeviceRestController {
 
     private final Logger logger = LoggerFactory.getLogger(DeviceRestController.class);
+    private final DeviceService deviceService;
+
+    public DeviceRestController(DeviceService deviceService) {
+        this.deviceService = deviceService;
+    }
 
     /**
      * Retrieves a device by its unique identifier.
@@ -56,7 +62,7 @@ public class DeviceRestController {
                     content = @Content)})
     @GetMapping("/{id}")
     public Device findById(@PathVariable long id) {
-        return new Device(id, "Test", "Brand", DeviceState.AVAILABLE, LocalDateTime.now());
+        return deviceService.findById(id);
     }
 
     /**
@@ -74,7 +80,7 @@ public class DeviceRestController {
                     content = @Content)})
     @GetMapping("brand/{brand}")
     public Collection<Device> findByBrand(@PathVariable String brand) {
-        return List.of(new Device(1L, "Test", brand, DeviceState.AVAILABLE, LocalDateTime.now()));
+        return deviceService.findAllByBrand(brand);
     }
 
     /**
@@ -92,7 +98,7 @@ public class DeviceRestController {
                     content = @Content)})
     @GetMapping("/state/{state}")
     public Collection<Device> findByState(@PathVariable DeviceState state) {
-        return List.of(new Device(1L, "Test", "Brand", state, LocalDateTime.now()));
+        return deviceService.findAllByDeviceState(state);
     }
 
     /**
@@ -107,9 +113,7 @@ public class DeviceRestController {
                             array = @ArraySchema(schema = @Schema(implementation = Device.class)))})})
     @GetMapping()
     public Collection<Device> findAll() {
-        return List.of(new Device(1L, "Test-1", "Brand", DeviceState.AVAILABLE, LocalDateTime.now()),
-                new Device(2L, "Test-2", "Brand", DeviceState.AVAILABLE, LocalDateTime.now()),
-                new Device(3L, "Test-3", "Brand", DeviceState.AVAILABLE, LocalDateTime.now()));
+        return deviceService.findAll();
     }
 
     /**
@@ -128,7 +132,7 @@ public class DeviceRestController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Device create(@RequestBody CreateUpdateDevice device) {
-        return new Device(1L, "Test", "Brand", DeviceState.AVAILABLE, LocalDateTime.now());
+        return deviceService.createDevice(device);
     }
 
     /**
@@ -147,6 +151,7 @@ public class DeviceRestController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Device update(@PathVariable long id, @RequestBody CreateUpdateDevice device) {
+        deviceService.updateDevice(id, device);
         return null;
     }
 
@@ -166,7 +171,7 @@ public class DeviceRestController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable long id) {
-
+        deviceService.deleteDevice(id);
     }
 
 

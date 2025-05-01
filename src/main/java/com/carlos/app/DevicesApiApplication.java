@@ -1,4 +1,4 @@
-package com.carlos.devices;
+package com.carlos.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

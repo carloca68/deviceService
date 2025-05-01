@@ -31,6 +31,7 @@
         <argLine/>
         <java.version>21</java.version>
         <spring.openApi.version>2.8.6</spring.openApi.version>
+        <spring-boot.build-image.imageName>com.carlos/device/api</spring-boot.build-image.imageName>
     </properties>
 
     <dependencies>

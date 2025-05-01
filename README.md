@@ -1,4 +1,4 @@
-# Global Devices API
+# Devices API
 
 A Spring Boot REST API for managing devices. This application provides endpoints for tracking and managing devices with their states (available, in use, or disabled).
 
@@ -53,6 +53,22 @@ docker compose up -d
 # Run the application
 java -jar target/devicesAPI-0.0.1-SNAPSHOT.jar
 ```
+
+### Build a docker image using paketo buildpacks
+**Obs:** Docker must be installed on your machine and running.
+
+```bash
+./mvnw spring-boot:build-image
+```
+The image name will be `com.carlos/device/api`
+
+### Running the app image as a docker compose image including the postgres database
+**Obs:** Docker must be installed on your machine and running.
+
+```bash
+docker compose -f docker-compose.yaml up 
+```
+The application will be available at: http://localhost:8080/swagger-ui/index.html
 
 ## API Documentation
 

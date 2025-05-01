@@ -59,6 +59,14 @@ The API documentation is available via Swagger UI at:
 http://localhost:8080/swagger-ui/index.html
 ```
 
+### Postman Collection
+
+A Postman collection is available in the repository for testing the API endpoints:
+
+1. Import the `postman_collection.json` file into Postman
+2. Create an environment in Postman with a variable `baseUrl` set to your server URL (default: `http://localhost:8080`)
+3. The collection includes tests for all endpoints and will automatically store created device IDs for use in subsequent requests
+
 ## API Endpoints
 
 ### Device Management
@@ -112,7 +120,6 @@ The project uses different testing approaches:
 
 1. **Unit Tests**: Testing individual components in isolation
    - `DeviceRestControllerTest` - Tests the REST controller using MockMVC and mocked service
-   - `SimpleDeviceRestControllerTest` - A more focused test using @WebMvcTest
 
 2. **Integration Tests**: Testing with real dependencies
    - Uses TestContainers to spin up a PostgreSQL database for integration tests

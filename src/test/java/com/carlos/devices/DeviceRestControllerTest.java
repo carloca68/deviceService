@@ -1,9 +1,11 @@
 package com.carlos.devices;
 
 import com.carlos.devices.domain.DeviceService;
+import com.carlos.devices.domain.exception.BusinessRulesException;
 import com.carlos.devices.domain.model.CreateUpdateDevice;
 import com.carlos.devices.domain.model.Device;
 import com.carlos.devices.domain.model.DeviceState;
+import com.carlos.devices.repository.ApiExceptionHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @AutoConfigureJsonTesters
 @WebMvcTest(DeviceRestController.class)
-@Import({DeviceRestController.class, DeviceRestControllerTest.TestConfig.class})
+@Import({DeviceRestController.class, ApiExceptionHandler.class, DeviceRestControllerTest.TestConfig.class})
 public class DeviceRestControllerTest {
 
     @Autowired
@@ -180,6 +182,22 @@ public class DeviceRestControllerTest {
                 .andExpect(status().isNoContent());
 
         verify(deviceService, times(1)).updateDevice(eq(1L), any(CreateUpdateDevice.class));
+    }
+
+    @Test
+    void updateWithInvalidData_ShouldNotUpdateDevice() throws Exception {
+        // Arrange
+        CreateUpdateDevice updateDevice = new CreateUpdateDevice("Updated Device", "Updated Brand");
+
+        doThrow(new BusinessRulesException("Invalid data")).when(deviceService).updateDevice(anyLong(), any(CreateUpdateDevice.class));
+
+        // Act & Assert
+        mockMvc.perform(put("/api/device/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateDevice)))
+                .andExpect(status().isBadRequest());
+
+        verify(deviceService).updateDevice(eq(1L), any(CreateUpdateDevice.class));
     }
 
     @Test

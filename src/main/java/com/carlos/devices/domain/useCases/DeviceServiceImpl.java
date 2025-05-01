@@ -2,6 +2,7 @@ package com.carlos.devices.domain.useCases;
 
 import com.carlos.devices.domain.DeviceRepository;
 import com.carlos.devices.domain.DeviceService;
+import com.carlos.devices.domain.exception.BusinessRulesException;
 import com.carlos.devices.domain.model.CreateUpdateDevice;
 import com.carlos.devices.domain.model.Device;
 import com.carlos.devices.domain.model.DeviceState;
@@ -41,12 +42,17 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Device createDevice(CreateUpdateDevice device) {
+        if (!device.isValidForCreation()) {
+            throw new BusinessRulesException("Invalid device details, must have a name and a brand: " + device.toString());
+        }
         return null;
     }
 
     @Override
     public void updateDevice(long id, CreateUpdateDevice device) {
-
+         if (!device.isValidForUpdate()) {
+             throw new BusinessRulesException("Invalid device details, must have at least one non-empty field: " + device.toString());
+         }
     }
 
     @Override

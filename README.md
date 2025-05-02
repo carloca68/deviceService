@@ -11,6 +11,9 @@ A Spring Boot REST API for managing devices. This application provides endpoints
 - Secrets vault to get database access information
 - FIX: Add a test to validate the device creation status and fix the issue that is not respecting de status sent in the request.
 
+## Performance improvements
+- Add distributed caching
+
 ## Technologies Used
 
 - Java 21

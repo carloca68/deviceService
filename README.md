@@ -6,6 +6,14 @@ A Spring Boot REST API for managing devices. This application provides endpoints
 - Improve date time documentation format
 - Add more tests for the error handling
 - Improve the docker compose file by addressing inconsistencies between compose.yaml and docker-compose.yaml
+- Improve logging
+- Observability (opentelemetry?)
+- Secrets vault to get database access information
+- FIX: Add a test to validate the device creation status and fix the issue that is not respecting de status sent in the request.
+- FIX: Return values for update and delete devices.
+
+## Performance improvements
+- Add distributed caching
 
 ## Technologies Used
 
